@@ -1,46 +1,63 @@
 // Import stylesheets
 import './style.css';
 
-let showalert = () => {
-    alert("engine");
-}
-
-// Write TypeScript code!
+const msgBox: HTMLElement = document.getElementById('messageBox');
+const selectCar: HTMLElement = document.getElementById('selectCar');
+const color = document.getElementById('color');
 const btn: HTMLElement = document.getElementById('btn');
-btn.addEventListener('click', showalert);
 
-
-
-export interface ICar {
-  Color: string;
-  Make: string;
-  doStartEngine:() => void; 
+let startEngine = (): void => {
+    let selectedcar = ((<HTMLInputElement>selectCar).value).toString();
+    
+    let car: ICar;
+    if (selectedcar == "fiat"){
+      car = new Fiat();            
+    }
+    else if (selectedcar == "ambassador"){
+       car = new Ambassador();
+    }
+    car.Color = ((<HTMLInputElement>color).value).toString();
+    car.doStartEngine();
 }
 
-export class Fiat implements ICar{
+btn.addEventListener('click', startEngine);
+
+
+export interface ICar{
+  Color: string;
+  Make: string;
+  doStartEngine(): void; 
+}
+
+export abstract class Car implements ICar {
+
   Color: string;
   Make: string;
 
-  constructor(color: string){
-    this.Color = color;
-    this.Make = 'Fiat';
-  }
+  constructor() { }
+  
+  abstract doStartEngine = (): void => {};
+}
 
-  doStartEngine: () => {
+export class Fiat extends Car{
+  Make = "Fiat";
 
+  constructor(){ super(); }
+
+  doStartEngine = ():void => {
+    msgBox.innerHTML = `started ${this.Make}`;
+    msgBox.style.color = this.Color;
   }
 }
 
-export class Ambassador implements ICar{
-  Color: string;
-  Make: string;
 
-  constructor(color: string, make: string){
-    this.Color = color;
-    this.Make = 'Ambassador';
-  }
+export  class Ambassador extends Car{
+  Make = "Ambassador";
 
-  doStartEngine: () => {
-    //alert("engine");
+  constructor(){ super(); }
+
+  doStartEngine = ():void => {
+    msgBox.innerHTML = `started ${this.Make}`;
+    msgBox.style.color = this.Color;
   }
 }
