@@ -1,17 +1,23 @@
 // Import stylesheets
 import './style.css';
 
-// Write TypeScript code!
-const appDiv: HTMLElement = document.getElementById('app');
-appDiv.innerHTML = `<button type="button" class="btn btn-default">Default</button>`;
+let showalert = () => {
+    alert("engine");
+}
 
-interface ICar {
+// Write TypeScript code!
+const btn: HTMLElement = document.getElementById('btn');
+btn.addEventListener('click', showalert);
+
+
+
+export interface ICar {
   Color: string;
   Make: string;
   doStartEngine:() => void; 
 }
 
-class Fiat implements ICar{
+export class Fiat implements ICar{
   Color: string;
   Make: string;
 
@@ -25,7 +31,7 @@ class Fiat implements ICar{
   }
 }
 
-class Ambassador implements ICar{
+export class Ambassador implements ICar{
   Color: string;
   Make: string;
 
@@ -35,6 +41,6 @@ class Ambassador implements ICar{
   }
 
   doStartEngine: () => {
-
+    //alert("engine");
   }
 }
